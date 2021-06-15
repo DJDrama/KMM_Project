@@ -3,16 +3,17 @@ package com.dj.kmm.android.presentation.recipe_detail
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import com.dj.kmm.domain.model.Recipe
 
 @Composable
 fun RecipeDetailScreen(
-    recipeId: Int?
+    recipe: Recipe?
 ){
-    if(recipeId==null){
+    if(recipe===null){
         Text("RecipeId is null!")
     }else{
         Column{
-            Text("RecipeDetail Id : ${recipeId}")
+            Text("RecipeDetail Id : ${recipe.title}")
         }
     }
 }

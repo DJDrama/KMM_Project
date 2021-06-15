@@ -4,8 +4,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.dj.kmm.android.di.Dummy
+import androidx.lifecycle.viewModelScope
+import com.dj.kmm.datasource.network.RecipeService
+import com.dj.kmm.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,14 +16,20 @@ class RecipeDetailViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val dummy: Dummy,
+    private val recipeService: RecipeService
 ) : ViewModel(){
-    val recipeId: MutableState<Int?> = mutableStateOf(null)
+    val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
     init {
-        savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            this.recipeId.value = recipeId
+        try {
+            savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
+                viewModelScope.launch {
+                    recipe.value = recipeService.get(recipeId)
+
+                }
+            }
+        }catch (e: Exception){
+
         }
-        println("RecipeDetailViewModel: ${dummy.description()}")
     }
 }

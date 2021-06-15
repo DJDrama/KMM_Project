@@ -38,7 +38,7 @@ fun Navigation() {
             val viewModel: RecipeDetailViewModel =
                 viewModel("RecipeDetailViewModel", factory)
             RecipeDetailScreen(
-                recipeId = viewModel.recipeId.value
+                recipe = viewModel.recipe.value
             )
 
         }

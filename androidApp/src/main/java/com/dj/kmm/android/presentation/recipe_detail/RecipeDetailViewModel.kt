@@ -10,7 +10,6 @@ import com.dj.kmm.interactors.recipe_detail.GetRecipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +29,6 @@ constructor(
 
     private fun getRecipe(recipeId: Int) {
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            println("RecipeDetailViewModel: ${dataState.isLoading}")
             dataState.data?.let { recipe ->
                 println("RecipeDetailViewModel: $recipe")
                 this.recipe.value = recipe

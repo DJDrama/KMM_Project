@@ -30,6 +30,9 @@ android {
         create("testReleaseApi")
     }
 }
+dependencies {
+    implementation("org.chromium.net:cronet-embedded:76.3809.111")
+}
 
 kotlin {
     android()

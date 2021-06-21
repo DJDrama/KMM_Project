@@ -76,6 +76,6 @@ kotlin {
 sqldelight {
     database("RecipeDatabase") {
         packageName = "com.dj.kmm.datasource.cache"
-        sourceFolders = listOf("src/commonMain/sqldelight")
+        sourceFolders = listOf("sqldelight")
     }
 }

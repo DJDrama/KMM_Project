@@ -1,5 +1,6 @@
 package com.dj.kmm.interactors.recipe_list
 
+import com.dj.kmm.datasource.cache.RecipeCache
 import com.dj.kmm.datasource.network.RecipeService
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.util.DataState
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 class SearchRecipes(
     private val recipeService: RecipeService,
+    private val recipeCache: RecipeCache,
 ) {
     fun execute(
         page: Int,
@@ -16,7 +18,13 @@ class SearchRecipes(
         try {
             emit(DataState.loading())
             val recipes = recipeService.search(page = page, query = query)
-            emit(DataState.data(data = recipes))
+            recipeCache.insert(recipes)
+            val cacheResult = if (query.isBlank()) {
+                recipeCache.getAll(page = page)
+            } else {
+                recipeCache.search(query = query, page = page)
+            }
+            emit(DataState.data(data = cacheResult))
         } catch (e: Exception) {
             //how can we emit an error?
         }

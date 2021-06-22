@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import com.dj.kmm.android.presentation.components.RecipeCard
 import com.dj.kmm.android.presentation.components.RecipeImage
 import com.dj.kmm.android.presentation.theme.AppTheme
 import com.dj.kmm.domain.model.Recipe
@@ -19,7 +20,8 @@ fun RecipeDetailScreen(
         if (recipe === null) {
             Text("RecipeId is null!")
         } else {
-            RecipeImage(url = recipe.featuredImage, contentDescription = recipe.title)
+            RecipeCard(recipe = recipe) {
+            }
         }
     }
 }

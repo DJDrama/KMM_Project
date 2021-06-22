@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import com.dj.kmm.android.presentation.components.RecipeImage
 import com.dj.kmm.android.presentation.theme.AppTheme
 import com.dj.kmm.domain.model.Recipe
 
@@ -12,16 +13,13 @@ import com.dj.kmm.domain.model.Recipe
 @ExperimentalComposeUiApi
 @Composable
 fun RecipeDetailScreen(
-    recipe: Recipe?
-){
+    recipe: Recipe?,
+) {
     AppTheme(displayProgressBar = false) {
-        if(recipe===null){
+        if (recipe === null) {
             Text("RecipeId is null!")
-        }else{
-            Column{
-                Text("RecipeDetail Id : ${recipe.title}")
-            }
+        } else {
+            RecipeImage(url = recipe.featuredImage, contentDescription = recipe.title)
         }
     }
-
 }

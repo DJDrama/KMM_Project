@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(project(":shared"))
 
+    implementation(Accompanist.coil)
     implementation(AndroidX.appCompat)
 
     implementation(Compose.runtime)

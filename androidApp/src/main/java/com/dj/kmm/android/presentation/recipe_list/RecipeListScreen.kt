@@ -1,38 +1,23 @@
 package com.dj.kmm.android.presentation.recipe_list
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.dj.kmm.android.presentation.theme.AppTheme
+import com.dj.kmm.presentation.recipe_list.RecipeListState
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun RecipeListScreen(
-    onSelectRecipe: (Int) -> Unit,
+    state: RecipeListState,
+    // state : RecipeListState,
+    // events: (RecipeListEvent) -> Unit,
+    onClickRecipeListItem: (Int) -> Unit,
 ) {
     AppTheme(displayProgressBar = false) {
-        LazyColumn() {
-            items(100) { recipeId ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onSelectRecipe(recipeId)
-                    }) {
-                    Text(modifier = Modifier.padding(16.dp),
-                        text = "RecipeId = ${recipeId}")
-                }
-            }
-
-        }
+        RecipeList(isLoading = state.isLoading,
+            recipes = state.recipes,
+            onClickRecipeListItem = onClickRecipeListItem)
     }
-
 }

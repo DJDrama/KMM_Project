@@ -20,7 +20,7 @@ class SearchRecipes(
             emit(DataState.loading())
             val recipes = recipeService.search(page = page, query = query)
 
-            delay(2000) // fake delay
+            delay(1000) // fake delay
 
             recipeCache.insert(recipes)
             val cacheResult = if (query.isBlank()) {

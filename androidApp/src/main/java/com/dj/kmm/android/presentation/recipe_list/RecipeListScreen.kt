@@ -1,8 +1,10 @@
 package com.dj.kmm.android.presentation.recipe_list
 
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import com.dj.kmm.android.presentation.recipe_list.components.SearchAppBar
 import com.dj.kmm.android.presentation.theme.AppTheme
 import com.dj.kmm.presentation.recipe_list.RecipeListEvents
 import com.dj.kmm.presentation.recipe_list.RecipeListState
@@ -16,14 +18,28 @@ fun RecipeListScreen(
     onClickRecipeListItem: (Int) -> Unit,
 ) {
     AppTheme(displayProgressBar = state.isLoading) {
-        RecipeList(
-            isLoading = state.isLoading,
-            recipes = state.recipes,
-            onClickRecipeListItem = onClickRecipeListItem,
-            page = state.page,
-            onTriggerNextPage = {
-                onTriggerEvent(RecipeListEvents.NextPage)
+        Scaffold(
+            topBar = {
+                SearchAppBar(
+                    query = state.query,
+                    onQueryChanged = {
+                        //TODO
+                    },
+                    onExecuteSearch = {
+                        //TODO
+                    }
+                )
             }
-        )
+        ) {
+            RecipeList(
+                isLoading = state.isLoading,
+                recipes = state.recipes,
+                onClickRecipeListItem = onClickRecipeListItem,
+                page = state.page,
+                onTriggerNextPage = {
+                    onTriggerEvent(RecipeListEvents.NextPage)
+                }
+            )
+        }
     }
 }

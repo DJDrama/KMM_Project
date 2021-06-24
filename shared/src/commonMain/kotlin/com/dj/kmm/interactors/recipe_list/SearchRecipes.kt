@@ -4,6 +4,7 @@ import com.dj.kmm.datasource.cache.RecipeCache
 import com.dj.kmm.datasource.network.RecipeService
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -18,6 +19,9 @@ class SearchRecipes(
         try {
             emit(DataState.loading())
             val recipes = recipeService.search(page = page, query = query)
+
+            delay(2000) // fake delay
+
             recipeCache.insert(recipes)
             val cacheResult = if (query.isBlank()) {
                 recipeCache.getAll(page = page)

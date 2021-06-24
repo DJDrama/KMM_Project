@@ -11,11 +11,10 @@ import com.dj.kmm.presentation.recipe_list.RecipeListState
 @Composable
 fun RecipeListScreen(
     state: RecipeListState,
-    // state : RecipeListState,
     // events: (RecipeListEvent) -> Unit,
     onClickRecipeListItem: (Int) -> Unit,
 ) {
-    AppTheme(displayProgressBar = false) {
+    AppTheme(displayProgressBar = state.isLoading) {
         RecipeList(isLoading = state.isLoading,
             recipes = state.recipes,
             onClickRecipeListItem = onClickRecipeListItem)

@@ -29,8 +29,11 @@ fun Navigation() {
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory = factory)
             RecipeListScreen(
                 state = viewModel.state.value,
-                onClickRecipeListItem = {recipeId->
+                onClickRecipeListItem = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
+                },
+                onTriggerEvent = { recipeListEvent ->
+                    viewModel.onTriggerEvent(recipeListEvent)
                 }
             )
         }

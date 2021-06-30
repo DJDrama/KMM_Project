@@ -3,6 +3,7 @@ package com.dj.kmm.interactors.recipe_detail
 import com.dj.kmm.datasource.cache.RecipeCache
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -12,6 +13,7 @@ class GetRecipe(
     fun execute(recipeId: Int): Flow<DataState<Recipe>> = flow {
         try {
             emit(DataState.loading())
+            delay(1500) // For Testing
             val recipe = recipeCache.get(recipeId = recipeId)
             emit(DataState.data(message = null, data = recipe))
         } catch (e: Exception) {

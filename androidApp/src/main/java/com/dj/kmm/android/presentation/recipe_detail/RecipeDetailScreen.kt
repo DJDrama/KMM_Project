@@ -1,15 +1,14 @@
 package com.dj.kmm.android.presentation.recipe_detail
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.dj.kmm.android.presentation.components.RecipeCard
-import com.dj.kmm.android.presentation.components.RecipeImage
+import com.dj.kmm.android.presentation.recipe_detail.components.RecipeView
 import com.dj.kmm.android.presentation.theme.AppTheme
 import com.dj.kmm.domain.model.Recipe
 
+@ExperimentalStdlibApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
@@ -20,8 +19,7 @@ fun RecipeDetailScreen(
         if (recipe === null) {
             Text("RecipeId is null!")
         } else {
-            RecipeCard(recipe = recipe) {
-            }
+            RecipeView(recipe = recipe)
         }
     }
 }

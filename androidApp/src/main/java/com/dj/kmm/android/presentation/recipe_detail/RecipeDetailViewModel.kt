@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.interactors.recipe_detail.GetRecipe
+import com.dj.kmm.presentation.recipe_detail.RecipeDetailEvents
+import com.dj.kmm.presentation.recipe_detail.RecipeDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,20 +21,39 @@ constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getRecipe: GetRecipe,
 ) : ViewModel() {
-    val recipe: MutableState<Recipe?> = mutableStateOf(null)
+
+    val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            getRecipe(recipeId)
+            onTriggerEvent(RecipeDetailEvents.GetRecipe(recipeId = recipeId))
+        }
+    }
+
+    fun onTriggerEvent(event: RecipeDetailEvents) {
+        when (event) {
+            is RecipeDetailEvents.GetRecipe -> {
+                getRecipe(event.recipeId)
+            }
+            else -> {
+                handleError("Invalid Event")
+            }
         }
     }
 
     private fun getRecipe(recipeId: Int) {
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
+            state.value = state.value.copy(isLoading = dataState.isLoading)
             dataState.data?.let { recipe ->
-                println("RecipeDetailViewModel: $recipe")
-                this.recipe.value = recipe
+                state.value = state.value.copy(recipe = recipe)
+            }
+            dataState.message?.let { message ->
+                handleError(message)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun handleError(errorMessage: String) {
+        // TODO
     }
 }

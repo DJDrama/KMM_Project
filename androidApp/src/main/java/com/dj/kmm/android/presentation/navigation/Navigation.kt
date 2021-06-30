@@ -17,6 +17,7 @@ import com.dj.kmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import com.dj.kmm.android.presentation.recipe_list.RecipeListScreen
 import com.dj.kmm.android.presentation.recipe_list.RecipeListViewModel
 
+@ExperimentalStdlibApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
@@ -46,7 +47,8 @@ fun Navigation() {
             val viewModel: RecipeDetailViewModel =
                 viewModel("RecipeDetailViewModel", factory)
             RecipeDetailScreen(
-                recipe = viewModel.recipe.value
+                state = viewModel.state.value,
+                onTriggerEvent = viewModel::onTriggerEvent
             )
 
         }

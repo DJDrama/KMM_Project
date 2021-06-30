@@ -24,16 +24,22 @@ constructor(
     val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
 
     init {
-       onTriggerEvent(RecipeListEvents.LoadRecipes)
+        onTriggerEvent(RecipeListEvents.LoadRecipes)
     }
 
-     fun onTriggerEvent(event: RecipeListEvents) {
+    fun onTriggerEvent(event: RecipeListEvents) {
         when (event) {
             is RecipeListEvents.LoadRecipes -> {
                 loadRecipes()
             }
             is RecipeListEvents.NextPage -> {
                 nextPage()
+            }
+            is RecipeListEvents.NewSearch -> {
+                newSearch()
+            }
+            is RecipeListEvents.OnUpdateQuery -> {
+                state.value = state.value.copy(query = event.query)
             }
             else -> {
                 handleError("Invalid Event")
@@ -54,6 +60,11 @@ constructor(
                 handleError(message)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun newSearch() {
+        state.value = state.value.copy(page = 1, recipes = listOf())
+        loadRecipes()
     }
 
     private fun nextPage() {

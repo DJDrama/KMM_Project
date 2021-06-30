@@ -3,6 +3,9 @@ package com.dj.kmm.android.presentation.recipe_list.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -21,12 +24,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.dj.kmm.presentation.recipe_list.FoodCategory
 
 @ExperimentalComposeUiApi
 @Composable
 fun SearchAppBar(
     query: String,
     onQueryChanged: (String) -> Unit,
+    categories: List<FoodCategory>,
     onExecuteSearch: () -> Unit,
 ) {
     Surface(
@@ -37,12 +42,17 @@ fun SearchAppBar(
         val keyboardController = LocalSoftwareKeyboardController.current
         Column {
             Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(value = query, onValueChange = onQueryChanged, label = {
-                    Text(text = "Search...")
-                }, keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done
-                ),
+                TextField(modifier = Modifier
+                    .fillMaxWidth(.9f)
+                    .padding(8.dp),
+                    value = query,
+                    onValueChange = onQueryChanged,
+                    label = {
+                        Text(text = "Search...")
+                    }, keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    ),
                     keyboardActions = KeyboardActions(
                         onDone = {
                             onExecuteSearch()
@@ -57,6 +67,14 @@ fun SearchAppBar(
                         backgroundColor = MaterialTheme.colors.surface
                     )
                 )
+            }
+            LazyRow(modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                items(categories) {
+                    FoodCategoryChip(
+                        category = it.value,
+                        onSelectedCategoryChanged = {},
+                        isSelected = false)
+                }
             }
         }
     }

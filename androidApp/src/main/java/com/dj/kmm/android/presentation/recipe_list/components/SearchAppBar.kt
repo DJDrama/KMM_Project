@@ -25,12 +25,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dj.kmm.presentation.recipe_list.FoodCategory
+import com.dj.kmm.presentation.recipe_list.FoodCategoryUtil
 
 @ExperimentalComposeUiApi
 @Composable
 fun SearchAppBar(
     query: String,
+    selectedCategory: FoodCategory? = null,
     onQueryChanged: (String) -> Unit,
+    onSelectedCategoryChanged: (FoodCategory) -> Unit,
     categories: List<FoodCategory>,
     onExecuteSearch: () -> Unit,
 ) {
@@ -72,8 +75,13 @@ fun SearchAppBar(
                 items(categories) {
                     FoodCategoryChip(
                         category = it.value,
-                        onSelectedCategoryChanged = {},
-                        isSelected = false)
+                        onSelectedCategoryChanged = {
+                            FoodCategoryUtil().getFoodCategory(it)?.let { newCategory ->
+                                onSelectedCategoryChanged(newCategory)
+                            }
+                        },
+                        isSelected = selectedCategory == it
+                    )
                 }
             }
         }

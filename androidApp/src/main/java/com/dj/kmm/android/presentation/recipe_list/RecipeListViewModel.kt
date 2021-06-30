@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.interactors.recipe_list.SearchRecipes
+import com.dj.kmm.presentation.recipe_list.FoodCategory
 import com.dj.kmm.presentation.recipe_list.RecipeListEvents
 import com.dj.kmm.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +40,10 @@ constructor(
                 newSearch()
             }
             is RecipeListEvents.OnUpdateQuery -> {
-                state.value = state.value.copy(query = event.query)
+                state.value = state.value.copy(query = event.query, selectedCategory = null)
+            }
+            is RecipeListEvents.OnSelectCategory -> {
+                onSelectCategory(event.category)
             }
             else -> {
                 handleError("Invalid Event")
@@ -62,6 +66,10 @@ constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun onSelectCategory(foodCategory: FoodCategory){
+        state.value = state.value.copy(selectedCategory = foodCategory, query = foodCategory.value)
+        newSearch()
+    }
     private fun newSearch() {
         state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipes()

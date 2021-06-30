@@ -31,7 +31,11 @@ fun RecipeListScreen(
                     onExecuteSearch = {
                         onTriggerEvent(RecipeListEvents.NewSearch)
                     },
-                    categories = foodCategories
+                    categories = foodCategories,
+                    onSelectedCategoryChanged = {
+                        onTriggerEvent(RecipeListEvents.OnSelectCategory(it))
+                    },
+                    selectedCategory = state.selectedCategory
                 )
             }
         ) {

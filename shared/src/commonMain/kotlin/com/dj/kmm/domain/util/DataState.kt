@@ -1,7 +1,9 @@
 package com.dj.kmm.domain.util
 
+import com.dj.kmm.domain.model.GenericMessageInfo
+
 data class DataState<T>(
-    val message: String? = null,
+    val message: GenericMessageInfo? = null,
     val data: T? = null,
     val isLoading: Boolean = false,
 ) {
@@ -9,7 +11,7 @@ data class DataState<T>(
     companion object {
 
         fun <T> error(
-            message: String,
+            message: GenericMessageInfo,
         ): DataState<T> {
             return DataState(
                 message = message,
@@ -18,7 +20,7 @@ data class DataState<T>(
         }
 
         fun <T> data(
-            message: String? = null,
+            message: GenericMessageInfo? = null,
             data: T? = null,
         ): DataState<T> {
             return DataState(

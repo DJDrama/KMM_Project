@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.dj.kmm.android.presentation.components.CircularIndeterminateProgressBar
 import com.dj.kmm.android.presentation.components.ProcessDialogQueue
+import com.dj.kmm.domain.model.GenericMessageInfo
 import com.dj.kmm.domain.util.Queue
 
 private val LightThemeColors = lightColors(
@@ -34,7 +35,7 @@ private val LightThemeColors = lightColors(
 @Composable
 fun AppTheme(
     displayProgressBar: Boolean,
-    dialogQueue: Queue<String> = Queue(mutableListOf()),
+    dialogQueue: Queue<GenericMessageInfo> = Queue(mutableListOf()),
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(

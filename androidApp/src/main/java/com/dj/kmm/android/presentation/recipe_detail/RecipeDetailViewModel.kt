@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.dj.kmm.domain.model.GenericMessageInfo
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.model.UIComponentType
+import com.dj.kmm.domain.util.GenericMessageInfoQueueUtil
 import com.dj.kmm.interactors.recipe_detail.GetRecipe
 import com.dj.kmm.presentation.recipe_detail.RecipeDetailEvents
 import com.dj.kmm.presentation.recipe_detail.RecipeDetailState
@@ -63,8 +64,13 @@ constructor(
     }
 
     private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder) {
-        val queue = state.value.queue
-        queue.add(messageInfo.build())
-        state.value = state.value.copy(queue = queue)
+        if (!GenericMessageInfoQueueUtil().doesMessageAlreadyExistInQueue(
+                queue = state.value.queue, messageInfo = messageInfo.build()
+            )
+        ) {
+            val queue = state.value.queue
+            queue.add(messageInfo.build())
+            state.value = state.value.copy(queue = queue)
+        }
     }
 }

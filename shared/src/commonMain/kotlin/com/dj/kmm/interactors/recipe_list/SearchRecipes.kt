@@ -18,9 +18,17 @@ class SearchRecipes(
     ): Flow<DataState<List<Recipe>>> = flow {
         try {
             emit(DataState.loading())
+            delay(500) // fake delay
+
+            // Test
+            if(query == "error"){
+                throw Exception("Forcing an Error(Search Failed)")
+            }
+
             val recipes = recipeService.search(page = page, query = query)
 
-            delay(500) // fake delay
+
+
 
             recipeCache.insert(recipes)
             val cacheResult = if (query.isBlank()) {
@@ -30,7 +38,7 @@ class SearchRecipes(
             }
             emit(DataState.data(data = cacheResult))
         } catch (e: Exception) {
-            //how can we emit an error?
+            emit(DataState.error<List<Recipe>>(message = e.message?: "Unknown Error"))
         }
     }
 }

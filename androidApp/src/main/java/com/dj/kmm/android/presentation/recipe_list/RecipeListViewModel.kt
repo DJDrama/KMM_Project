@@ -66,10 +66,11 @@ constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun onSelectCategory(foodCategory: FoodCategory){
+    private fun onSelectCategory(foodCategory: FoodCategory) {
         state.value = state.value.copy(selectedCategory = foodCategory, query = foodCategory.value)
         newSearch()
     }
+
     private fun newSearch() {
         state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipes()
@@ -87,5 +88,8 @@ constructor(
     }
 
     private fun handleError(errorMessage: String) {
+        val queue = state.value.queue
+        queue.add(errorMessage)
+        state.value = state.value.copy(queue = queue)
     }
 }

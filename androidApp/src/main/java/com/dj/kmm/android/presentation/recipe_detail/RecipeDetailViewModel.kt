@@ -54,6 +54,8 @@ constructor(
     }
 
     private fun handleError(errorMessage: String) {
-        // TODO
+        val queue = state.value.queue
+        queue.add(errorMessage)
+        state.value = state.value.copy(queue = queue)
     }
 }

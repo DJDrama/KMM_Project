@@ -35,22 +35,22 @@ constructor(
         onTriggerEvent(RecipeListEvents.LoadRecipes)
 
         // Test
-        val messageInfoBuilder = GenericMessageInfo.Builder()
-            .id(UUID.randomUUID().toString())
-            .title("Weird")
-            .uiComponentType(UIComponentType.Dialog)
-            .description("Test")
-            .positive(positiveAction = PositiveAction(
-                positiveBtnTxt = "Ok", onPositiveAction = {
-                    state.value = state.value.copy(query = "Kale")
-                    onTriggerEvent(RecipeListEvents.NewSearch)
-                }
-            ))
-            .negative(NegativeAction("Cancel", onNegativeAction = {
-                state.value = state.value.copy(query = "Chicken")
-                onTriggerEvent(RecipeListEvents.NewSearch)
-            }))
-        appendToMessageQueue(messageInfo = messageInfoBuilder)
+        // val messageInfoBuilder = GenericMessageInfo.Builder()
+        //     .id(UUID.randomUUID().toString())
+        //     .title("Weird")
+        //     .uiComponentType(UIComponentType.Dialog)
+        //     .description("Test")
+        //     .positive(positiveAction = PositiveAction(
+        //         positiveBtnTxt = "Ok", onPositiveAction = {
+        //             state.value = state.value.copy(query = "Kale")
+        //             onTriggerEvent(RecipeListEvents.NewSearch)
+        //         }
+        //     ))
+        //     .negative(NegativeAction("Cancel", onNegativeAction = {
+        //         state.value = state.value.copy(query = "Chicken")
+        //         onTriggerEvent(RecipeListEvents.NewSearch)
+        //     }))
+        // appendToMessageQueue(messageInfo = messageInfoBuilder)
     }
 
     fun onTriggerEvent(event: RecipeListEvents) {

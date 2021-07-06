@@ -6,6 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dj.kmm.domain.model.GenericMessageInfo
+import com.dj.kmm.domain.model.NegativeAction
+import com.dj.kmm.domain.model.PositiveAction
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.model.UIComponentType
 import com.dj.kmm.domain.util.GenericMessageInfoQueueUtil
@@ -31,6 +33,24 @@ constructor(
 
     init {
         onTriggerEvent(RecipeListEvents.LoadRecipes)
+
+        // Test
+        val messageInfoBuilder = GenericMessageInfo.Builder()
+            .id(UUID.randomUUID().toString())
+            .title("Weird")
+            .uiComponentType(UIComponentType.Dialog)
+            .description("Test")
+            .positive(positiveAction = PositiveAction(
+                positiveBtnTxt = "Ok", onPositiveAction = {
+                    state.value = state.value.copy(query = "Kale")
+                    onTriggerEvent(RecipeListEvents.NewSearch)
+                }
+            ))
+            .negative(NegativeAction("Cancel", onNegativeAction = {
+                state.value = state.value.copy(query = "Chicken")
+                onTriggerEvent(RecipeListEvents.NewSearch)
+            }))
+        appendToMessageQueue(messageInfo = messageInfoBuilder)
     }
 
     fun onTriggerEvent(event: RecipeListEvents) {
@@ -50,7 +70,7 @@ constructor(
             is RecipeListEvents.OnSelectCategory -> {
                 onSelectCategory(event.category)
             }
-            is RecipeListEvents.OnRemovedHeadMessageFromQueue->{
+            is RecipeListEvents.OnRemovedHeadMessageFromQueue -> {
                 removeHeadMessage()
             }
             else -> {
@@ -113,12 +133,12 @@ constructor(
         }
     }
 
-    private fun removeHeadMessage(){
-        try{
+    private fun removeHeadMessage() {
+        try {
             val queue = state.value.queue
             queue.remove()
             state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
-        }catch(e: Exception){
+        } catch (e: Exception) {
             //nothing to remove, queue is empty
         }
     }

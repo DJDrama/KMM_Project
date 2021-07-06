@@ -7,11 +7,13 @@ import com.dj.kmm.domain.util.Queue
 @Composable
 fun ProcessDialogQueue(
     dialogQueue: Queue<GenericMessageInfo>?,
+    onRemoveHeadFromQueue: ()->Unit
 ) {
     dialogQueue?.peek()?.let { dialogInfo ->
         GenericDialog(
             title = dialogInfo.title,
-            description = dialogInfo.description
+            description = dialogInfo.description,
+            onRemoveHeadFromQueue = onRemoveHeadFromQueue
         )
     }
 }

@@ -14,6 +14,7 @@ import com.dj.kmm.android.presentation.recipe_detail.components.RecipeView
 import com.dj.kmm.android.presentation.theme.AppTheme
 import com.dj.kmm.presentation.recipe_detail.RecipeDetailEvents
 import com.dj.kmm.presentation.recipe_detail.RecipeDetailState
+import com.dj.kmm.presentation.recipe_list.RecipeListEvents
 
 @ExperimentalStdlibApi
 @ExperimentalMaterialApi
@@ -23,7 +24,11 @@ fun RecipeDetailScreen(
     state: RecipeDetailState,
     onTriggerEvent: (RecipeDetailEvents) -> Unit,
 ) {
-    AppTheme(displayProgressBar = state.isLoading, dialogQueue = state.queue) {
+    AppTheme(displayProgressBar = state.isLoading, dialogQueue = state.queue,
+        onRemoveHeadFromQueue = {
+            onTriggerEvent(RecipeDetailEvents.OnRemovedHeadMessageFromQueue)
+        }
+    ) {
         if (state.recipe == null && state.isLoading) {
             // Loading
             LoadingRecipeShimmer(

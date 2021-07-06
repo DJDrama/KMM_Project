@@ -9,6 +9,7 @@ import com.dj.kmm.domain.model.GenericMessageInfo
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.model.UIComponentType
 import com.dj.kmm.domain.util.GenericMessageInfoQueueUtil
+import com.dj.kmm.domain.util.Queue
 import com.dj.kmm.interactors.recipe_list.SearchRecipes
 import com.dj.kmm.presentation.recipe_list.FoodCategory
 import com.dj.kmm.presentation.recipe_list.RecipeListEvents
@@ -48,6 +49,9 @@ constructor(
             }
             is RecipeListEvents.OnSelectCategory -> {
                 onSelectCategory(event.category)
+            }
+            is RecipeListEvents.OnRemovedHeadMessageFromQueue->{
+                removeHeadMessage()
             }
             else -> {
                 appendToMessageQueue(
@@ -106,6 +110,16 @@ constructor(
             val queue = state.value.queue
             queue.add(messageInfo.build())
             state.value = state.value.copy(queue = queue)
+        }
+    }
+
+    private fun removeHeadMessage(){
+        try{
+            val queue = state.value.queue
+            queue.remove()
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+        }catch(e: Exception){
+            //nothing to remove, queue is empty
         }
     }
 }

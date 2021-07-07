@@ -8,6 +8,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import com.dj.kmm.android.presentation.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalStdlibApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @ExperimentalMaterialApi

@@ -25,6 +25,28 @@ class RecipeListViewModel: ObservableObject {
         // TODO("Perform Search")
     }
     
+    func onTriggerEvent(stateEvent: RecipeListEvents){
+        switch stateEvent {
+        case is RecipeListEvents.LoadRecipes:
+            doNothing()
+        case is RecipeListEvents.NextPage:
+            doNothing()
+        case is RecipeListEvents.OnUpdateQuery:
+            doNothing()
+        case is RecipeListEvents.OnSelectCategory:
+            doNothing()
+        case is RecipeListEvents.OnRemoveHeadMessageFromQueue:
+            doNothing()
+            
+        default:
+            doNothing()
+        }
+    }
+    
+    func doNothing(){
+        //does nothing
+    }
+    
     func updateState(
         isLoading: Bool? = nil,
         page: Int? = nil,

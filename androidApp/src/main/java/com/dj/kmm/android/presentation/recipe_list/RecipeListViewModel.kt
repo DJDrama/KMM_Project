@@ -89,7 +89,7 @@ constructor(
         searchRecipes.execute(
             page = state.value.page,
             query = state.value.query,
-        ).onEach { dataState ->
+        ).collectCommon(viewModelScope) { dataState ->
             state.value = state.value.copy(isLoading = dataState.isLoading)
             dataState.data?.let { recipes ->
                 appendRecipes(recipes)
@@ -97,7 +97,7 @@ constructor(
             dataState.message?.let { message ->
                 appendToMessageQueue(message)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun onSelectCategory(foodCategory: FoodCategory) {

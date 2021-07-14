@@ -4,7 +4,9 @@ import com.dj.kmm.datasource.cache.RecipeCache
 import com.dj.kmm.domain.model.GenericMessageInfo
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.model.UIComponentType
+import com.dj.kmm.domain.util.CommonFlow
 import com.dj.kmm.domain.util.DataState
+import com.dj.kmm.domain.util.asCommonFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,7 +14,7 @@ import kotlinx.coroutines.flow.flow
 class GetRecipe(
     private val recipeCache: RecipeCache,
 ) {
-    fun execute(recipeId: Int): Flow<DataState<Recipe>> = flow {
+    fun execute(recipeId: Int): CommonFlow<DataState<Recipe>> = flow {
         try {
             emit(DataState.loading())
             delay(1500) // For Testing
@@ -26,5 +28,5 @@ class GetRecipe(
                 .description(e.message ?: "Unknown Error")
             ))
         }
-    }
+    }.asCommonFlow()
 }

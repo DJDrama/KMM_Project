@@ -5,7 +5,9 @@ import com.dj.kmm.datasource.network.RecipeService
 import com.dj.kmm.domain.model.GenericMessageInfo
 import com.dj.kmm.domain.model.Recipe
 import com.dj.kmm.domain.model.UIComponentType
+import com.dj.kmm.domain.util.CommonFlow
 import com.dj.kmm.domain.util.DataState
+import com.dj.kmm.domain.util.asCommonFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +19,7 @@ class SearchRecipes(
     fun execute(
         page: Int,
         query: String,
-    ): Flow<DataState<List<Recipe>>> = flow {
+    ): CommonFlow<DataState<List<Recipe>>> = flow {
         try {
             emit(DataState.loading())
             delay(500) // fake delay
@@ -48,5 +50,5 @@ class SearchRecipes(
                     .description(e.message?: "Unknown Error")
             ))
         }
-    }
+    }.asCommonFlow()
 }

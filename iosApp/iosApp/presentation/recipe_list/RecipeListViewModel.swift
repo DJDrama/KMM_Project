@@ -25,6 +25,19 @@ class RecipeListViewModel: ObservableObject {
         // TODO("Perform Search")
     }
     
-    
+    func updateState(
+        isLoading: Bool? = nil,
+        page: Int? = nil,
+        query: String? = nil,
+        queue: Queue<GenericMessageInfo>? = nil
+    ){
+        let currentState = (self.state.copy() as! RecipeListState)
+        self.state = self.state.doCopy(isLoading: isLoading ?? currentState.isLoading,
+                                       page: Int32(page ?? Int(currentState.page)),
+                                       query: query ?? currentState.query,
+                                       selectedCategory: currentState.selectedCategory,
+                                       recipes: currentState.recipes,
+                                       queue: queue ?? currentState.queue)
+    }
 }
 

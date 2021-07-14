@@ -26,7 +26,14 @@ struct RecipeListScreen: View {
     }
     
     var body: some View {
-        Text("RecipeList Screen")
+        VStack {
+            Text("\(viewModel.state.page)")
+            Button(action: {
+                viewModel.updateState(page: Int(viewModel.state.page) + 1)
+            }, label: {
+                Text("Increment Page")
+            })
+        }
     }
 }
 //

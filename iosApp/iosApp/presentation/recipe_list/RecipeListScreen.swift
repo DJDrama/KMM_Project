@@ -28,7 +28,11 @@ struct RecipeListScreen: View {
     var body: some View {
         List{
             ForEach(viewModel.state.recipes, id: \.self.id){ recipe in
-                Text(recipe.title)
+                Text(recipe.title).onAppear(perform: {
+                    if viewModel.shouldQueryNextPage(recipe: recipe){
+                        viewModel.onTriggerEvent(stateEvent: RecipeListEvents.NextPage())
+                    }
+                })
             }
         }
     }

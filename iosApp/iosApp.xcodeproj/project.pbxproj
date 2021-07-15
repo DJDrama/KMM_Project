@@ -11,6 +11,7 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		22E8E3942695F95600BC2901 /* RecipeListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8E3932695F95600BC2901 /* RecipeListScreen.swift */; };
 		22E8E3992695FB1B00BC2901 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8E3982695FB1B00BC2901 /* RecipeListViewModel.swift */; };
+		22E8E39D26A0840300BC2901 /* SearchAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8E39C26A0840300BC2901 /* SearchAppBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		22E8E3932695F95600BC2901 /* RecipeListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListScreen.swift; sourceTree = "<group>"; };
 		22E8E3982695FB1B00BC2901 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
+		22E8E39C26A0840300BC2901 /* SearchAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppBar.swift; sourceTree = "<group>"; };
 		4E7B1F351BA4AD562B362B8E /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 		22E8E3912695F93500BC2901 /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				22E8E39B26A083F500BC2901 /* components */,
 				22E8E3922695F93D00BC2901 /* recipe_list */,
 			);
 			path = presentation;
@@ -51,6 +54,14 @@
 				22E8E3982695FB1B00BC2901 /* RecipeListViewModel.swift */,
 			);
 			path = recipe_list;
+			sourceTree = "<group>";
+		};
+		22E8E39B26A083F500BC2901 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				22E8E39C26A0840300BC2901 /* SearchAppBar.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		7555FF72242A565900829871 = {
@@ -193,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22E8E3942695F95600BC2901 /* RecipeListScreen.swift in Sources */,
+				22E8E39D26A0840300BC2901 /* SearchAppBar.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				22E8E3992695FB1B00BC2901 /* RecipeListViewModel.swift in Sources */,
 			);

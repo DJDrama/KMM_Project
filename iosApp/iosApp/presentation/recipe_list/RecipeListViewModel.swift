@@ -31,11 +31,11 @@ class RecipeListViewModel: ObservableObject {
         case is RecipeListEvents.LoadRecipes:
             loadRecipes()
         case is RecipeListEvents.NewSearch:
-            doNothing()
+            newSearch()
         case is RecipeListEvents.NextPage:
             nextPage()
         case is RecipeListEvents.OnUpdateQuery:
-            doNothing()
+            onUpdateQuery(query: (stateEvent as! RecipeListEvents.OnUpdateQuery).query)
         case is RecipeListEvents.OnSelectCategory:
             doNothing()
         case is RecipeListEvents.OnRemoveHeadMessageFromQueue:
@@ -45,11 +45,14 @@ class RecipeListViewModel: ObservableObject {
             doNothing()
         }
     }
+    
+    
     private func nextPage(){
         let currentState = self.state.copy() as! RecipeListState
         updateState(page: Int(currentState.page) + 1)
         loadRecipes()
     }
+    
     private func loadRecipes(){
         let currentState = (self.state.copy() as! RecipeListState)
         do {
@@ -76,9 +79,37 @@ class RecipeListViewModel: ObservableObject {
             print("\(error)")
         }
     }
+    
+    private func newSearch(){
+        resetSearchState()
+        loadRecipes()
+    }
+    
+    private func resetSearchState(){
+        let currentState = (self.state.copy() as! RecipeListState)
+        var foodCategory = currentState.selectedCategory
+        if(foodCategory?.value != currentState.query){
+            foodCategory = nil // unhighlight chip
+        }
+        self.state = self.state.doCopy(
+            isLoading: currentState.isLoading,
+            page: 1, // reset
+            query: currentState.query,
+            selectedCategory: foodCategory, // reset
+            recipes: [], // reset
+            bottomRecipe: currentState.bottomRecipe,
+            queue: currentState.queue
+        )
+    }
+    
+    private func onUpdateQuery(query: String){
+        updateState(query: query)
+    }
+    
     private func onUpdateBottomRecipe(recipe: Recipe){
         updateState(bottomRecipe: recipe)
     }
+    
     func appendRecipes(recipes: [Recipe]){
         var currentState = (self.state.copy() as! RecipeListState)
         var currentRecipes = currentState.recipes
